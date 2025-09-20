@@ -3,7 +3,6 @@ import re
 from pydantic import BaseModel, EmailStr, field_validator
 
 from database import accounts_validators
-from database.validators.accounts import validate_password_strength
 from schemas.examples.accounts import user_create_schema_example, user_activate_schema_example, \
     user_created_schema_example, user_password_reset_example, password_reset_completion_example, user_login_example, \
     user_login_response_example
@@ -27,7 +26,7 @@ class UserRegistrationRequestSchema(UserBaseSchema):
     @field_validator("password")
     @classmethod
     def check_password(cls, v: str) -> str:
-        return validate_password_strength(v)
+        return accounts_validators.validate_password_strength(v)
 
 
 class UserRegistrationResponseSchema(UserBaseSchema):
@@ -82,6 +81,11 @@ class PasswordResetCompleteRequestSchema(UserBaseSchema):
             ]
         }
     }
+
+    @field_validator("new_password")
+    @classmethod
+    def check_password(cls, v: str):
+        return accounts_validators.validate_password_strength(v)
 
 
 class UserLoginResponseSchema(BaseModel):
