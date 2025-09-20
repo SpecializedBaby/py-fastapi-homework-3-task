@@ -1,6 +1,6 @@
 user_create_schema_example = {
   "email": "user@example.com",
-  "new_password": "SecurePassword123!"
+  "password": "SecurePassword123!"
 }
 
 user_created_schema_example = {
@@ -20,7 +20,7 @@ user_password_reset_example = {
 password_reset_completion_example = {
   "email": "testuser@example.com",
   "token": "valid-reset-token",
-  "new_password": "NewStrongPassword123!"
+  "password": "NewStrongPassword123!"
 }
 
 user_login_example = {
