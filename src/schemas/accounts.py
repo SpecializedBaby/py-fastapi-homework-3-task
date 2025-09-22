@@ -13,7 +13,7 @@ class UserBaseSchema(BaseModel):
 
 
 class UserRegistrationRequestSchema(UserBaseSchema):
-    password: str
+    new_password: str
 
     model_config = {
         "json_schema_extra": {
@@ -23,7 +23,7 @@ class UserRegistrationRequestSchema(UserBaseSchema):
         }
     }
 
-    @field_validator("password")
+    @field_validator("new_password")
     @classmethod
     def check_password(cls, v: str) -> str:
         return accounts_validators.validate_password_strength(v)
@@ -70,9 +70,8 @@ class PasswordResetRequestSchema(UserBaseSchema):
     }
 
 
-class PasswordResetCompleteRequestSchema(UserBaseSchema):
+class PasswordResetCompleteRequestSchema(UserRegistrationRequestSchema):
     token: str
-    new_password: str
 
     model_config = {
         "json_schema_extra": {
@@ -81,11 +80,6 @@ class PasswordResetCompleteRequestSchema(UserBaseSchema):
             ]
         }
     }
-
-    @field_validator("new_password")
-    @classmethod
-    def check_password(cls, v: str):
-        return accounts_validators.validate_password_strength(v)
 
 
 class UserLoginResponseSchema(BaseModel):
